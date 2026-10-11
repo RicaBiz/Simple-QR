@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>QR Code Generator</title>
+</head>
+<body>
+
+    <h1>QR Code Generator</h1>
+
+    <input type="text" name="qrtext" id="qrtext" style="width: 80%;" />
+    <button type="button" id="createButton">Crea QR</button>
+    <input type="number" name="scale" id="scale" min="1" max="20" value="6" />
+    <br />
+    
+    <canvas id="qrcode-canvas"></canvas>
+
+    <script src="qrcode.js"></script>
+
+    <script>
+        const createButton = document.getElementById("createButton");
+        const scaleInput = document.getElementById("scale");
+        createButton.addEventListener("click", () => {
+            const textToEncode = document.getElementById("qrtext").value;
+
+            const canvas = document.getElementById('qrcode-canvas');
+
+            // Generate the QR code on the canvas
+            QRCode.toCanvas(canvas, textToEncode, {
+                errorCorrectionLevel: 'M',
+                scale: scaleInput.value,
+                color: {
+                    dark: "#000000ff",
+                    light: "#ffffffff"
+                }
+            }, function (error) {
+                if (error) {
+                    console.error("Error generating QR code:", error);
+                } else {
+                    console.log("QR code generated successfully!");
+                }
+            });
+        });
+        
+    </script>
+
+</body>
+</html>
